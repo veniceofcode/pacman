@@ -48,6 +48,7 @@ app.use(function(err, req, res, next) {
 });
 
 Database.connect(app, function(err) {
+    console.log('Inside App Database.connect');
     if (err) {
         console.log('Failed to connect to database server');
     } else {
