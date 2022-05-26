@@ -12,23 +12,6 @@ router.use(function timeLog (req, res, next) {
     next();
 })
 
-// Verifying list of DB
-async function listDatabases(client) {
-    databasesList = await client.db().admin().listDatabases();
-
-    console.log("Databases:");
-    databasesList.databases.forEach(db => console.log(` - ${db.name}`));
-}
-
-
-// create a new collection named HighscoresCollection
-
-async function createCollection(client, newCollection){
-    const result = await client.db("pacman").collection("highscores").insertOne(newListing);
-    console.log(`New listing created with the following id: ${result.insertedId}`);
-}
-
-
 router.get('/list', urlencodedParser, function(req, res, next) {
     console.log('[GET /highscores/list]');
     Database.getDb(req.app, function(err, db) {
@@ -55,7 +38,6 @@ router.get('/list', urlencodedParser, function(req, res, next) {
     });
 });
 
-
 // Accessed at /highscores
 router.post('/', urlencodedParser, function(req, res, next) {
     console.log('[POST /highscores] body =', req.body,
@@ -72,7 +54,7 @@ router.post('/', urlencodedParser, function(req, res, next) {
         }
 
         // Insert high score with extra user data
-        const insertHighScore = await highscore.insertOne({
+        db.collection('highscore').insertOne({
                 name: req.body.name,
                 cloud: req.body.cloud,
                 zone: req.body.zone,
@@ -84,9 +66,7 @@ router.post('/', urlencodedParser, function(req, res, next) {
                 user_agent: req.headers['user-agent'],
                 hostname: req.hostname,
                 ip_addr: req.ip
-            },
-            console.log(`New collection item recorded with the following id: ${insertHighScore.insertedId}`);
-             {
+            }, {
                 w: 'majority',
                 j: true,
                 wtimeout: 10000

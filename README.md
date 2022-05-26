@@ -51,7 +51,7 @@ Once you're satisfied you can push the image to the container registry.
 docker push <registry>/<user>/pacman-nodejs-app
 ```
 
-### Building using an s2i image
+### Building Pacman using an s2i image 
 
 ```
 s2i build . centos/nodejs-6-centos7 pacman

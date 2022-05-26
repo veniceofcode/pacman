@@ -8,19 +8,11 @@ var Database = require('../lib/database');
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
 
-
 // middleware that is specific to this router
 router.use(function timeLog (req, res, next) {
     console.log('Time: ', Date());
     next();
 })
-
-// create a new collection named UserStatsCollection
-
-async function createUserStatsCollection(client, newCollection){
-    const result = await client.db("pacman").collection("userstats").insertOne(newListing);
-    console.log(`New listing created with the following id: ${result.insertedId}`);
-}
 
 router.get('/id', function(req, res, next) {
     console.log('[GET /user/id]');
@@ -50,8 +42,6 @@ router.get('/id', function(req, res, next) {
     });
 
 });
-
-
 
 router.post('/stats', urlencodedParser, function(req, res, next) {
     console.log('[POST /user/stats]\n',
