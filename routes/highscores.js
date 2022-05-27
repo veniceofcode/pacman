@@ -48,11 +48,13 @@ router.post('/', urlencodedParser, function(req, res, next) {
     var userScore = parseInt(req.body.score, 10),
         userLevel = parseInt(req.body.level, 10);
 
+console.log('highscore 1001');
     Database.getDb(req.app, function(err, db) {
         if (err) {
             return next(err);
         }
 
+console.log('highscore 1002');
         // Insert high score with extra user data
         db.collection('highscore').insertOne({
                 name: req.body.name,
@@ -89,6 +91,7 @@ router.post('/', urlencodedParser, function(req, res, next) {
                     rs: returnStatus
                 });
             });
+console.log('highscore 1003');
     });
 });
 
