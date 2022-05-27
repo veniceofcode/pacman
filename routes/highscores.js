@@ -56,7 +56,7 @@ console.log('highscore 1001');
 
 console.log('highscore 1002');
         // Insert high score with extra user data
-        db.collection('highscore').insertOne({
+        db.db("pacman").collection('highscore').insertOne({
                 name: req.body.name,
                 cloud: req.body.cloud,
                 zone: req.body.zone,
