@@ -1,0 +1,17 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: pacman-deploy-run-
+spec:
+  params:
+   - name: APP_GIT_URL
+     value: "https://github.com/venicofcode/pacman.git"
+  pipelineRef:
+    name: pacman-pipeline
+  workspaces:
+  - name: app-source
+    persistentVolumeClaim:
+      claimName: app-source-pvc
+  - name: maven-settings
+    emptyDir: {}
+
