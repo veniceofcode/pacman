@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-
 echo "Installing RHODA operator"
 CHANNEL=${1:-alpha}
 CATALOG_SOURCE=${2:-openshift-marketplace}
@@ -57,5 +56,3 @@ for i in {1..150}; do  # timeout after 5 minutes
   echo -n "."
   sleep 2
 done
-echo "Openshift Database Access Operator is installed and Running!"
-`EOF'
