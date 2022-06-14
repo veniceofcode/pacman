@@ -42,12 +42,14 @@ spec:
   startingCSV: dbaas-operator.v0.1.5
 ---
 EOF
+
+sleep 2
 echo "Check if RHODA Operator pod is ready"
 for i in {1..150}; do  # timeout after 5 minutes
-  pods="$(oc get pods -n openshift-marketplace --no-headers -l name=dbaas-operator 2>/dev/null |grep dbaas-operator | wc -l)"
+  pods="$(oc get pods -n openshift-dbaas-operator --no-headers -l name=dbaas-operator 2>/dev/null |grep dbaas-operator | wc -l)"
   if [[ "${pods}" -ge 1 ]]; then
     echo -e "\nWaiting for RHODA operator pod"
-    oc wait --for=condition=Ready -n openshift-marketplace -l name=dbaas-operator pod --timeout=5m
+    oc wait --for=condition=Ready -n openshift-dbaas-operator -l name=dbaas-operator pod --timeout=5m
     retval=$?
     if [[ "${retval}" -gt 0 ]]; then exit "${retval}"; else break; fi
   fi
