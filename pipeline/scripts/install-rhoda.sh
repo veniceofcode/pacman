@@ -26,8 +26,7 @@ kind: OperatorGroup
 metadata:
   name: dbaas-operator
   namespace: openshift-dbaas-operator
-EOF
-cat <<-EOF | oc apply -f -
+---
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
@@ -40,7 +39,6 @@ spec:
   installPlanApproval: Automatic
   channel: $CHANNEL
   startingCSV: dbaas-operator.v0.1.5
----
 EOF
 echo "Check if RHODA Operator pod is ready"
 for i in {1..150}; do  # timeout after 5 minutes
