@@ -3,7 +3,9 @@ echo "Installing RHODA operator"
 CHANNEL=${1:-alpha}
 CATALOG_SOURCE=${2:-openshift-marketplace}
 oc process -f https://raw.githubusercontent.com/veniceofcode/pacman/master/pipeline/scripts/install.yaml | oc apply -f-
+
 echo "Check if RHODA Operator pod is ready"
+
 for i in {1..150}; do  # timeout after 5 minutes
   pods="$(oc get pods -n openshift-dbaas-operator --no-headers -l name=dbaas-operator 2>/dev/null |grep dbaas-operator | wc -l)"
   if [[ "${pods}" -ge 1 ]]; then
