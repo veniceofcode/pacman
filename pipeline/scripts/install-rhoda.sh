@@ -59,23 +59,3 @@ for i in {1..150}; do  # timeout after 5 minutes
   sleep 2
 done
 echo "Openshift Database Access Operator is installed and Running!"
-
-
-echo "Start Installation of Knative Serving"
-sleep 20
-
-for i in {1..150}; do
-  output="$(oc get knativeserving.operator.knative.dev/knative-serving -n knative-serving --template='{{range .status.conditions}}{{printf "%s=%s\n" .type .status}}{{end}}' | grep True | wc -l)"
-  if [[ "${output}" -eq "3" ]]
-  then
-     echo ""
-     echo "successfully Installed Knative Serving for Serverless operator!"
-     exit 0
-  fi
-  if [[ "${i}" -eq 150 ]]; then
-    echo "Timeout: pod was not created."
-    exit 2
-  fi
-  echo -n "."
-  sleep 2
-done
