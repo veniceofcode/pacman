@@ -61,5 +61,3 @@ for i in {1..150}; do  # timeout after 5 minutes
   sleep 2
 done
 echo "Openshift Database Access Operator is installed and Running!"
-  sleep 2
-done
