@@ -3,8 +3,7 @@
 echo "Installing RHODA operator"
 CHANNEL=${1:-alpha}
 CATALOG_SOURCE=${2:-openshift-marketplace}
-cat <<EOF | oc apply -f -
----
+cat <<-EOF | oc apply -f -
 apiVersion: v1
 kind: Namespace
 metadata:
