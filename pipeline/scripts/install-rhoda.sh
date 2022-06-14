@@ -71,4 +71,5 @@ for i in {1..150}; do  # timeout after 5 minutes
     exit 2
   fi
   echo -n "."
+  sleep 10
 done
