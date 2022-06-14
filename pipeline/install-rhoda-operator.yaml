@@ -31,6 +31,7 @@ spec:
         set -e -u -o pipefail
         echo -e "Logged in as kubeadmin user" 
         oc login -u kubeadmin -p $KUBEADMIN_PASSWORD $APISERVER --insecure-skip-tls-verify=true
+        ls $(workspaces.rhoda.path)
         $(workspaces.rhoda.path)/pipeline/scripts/install-rhoda.sh $(params.CHANNEL) $(params.CATALOG_SOURCE)
   workspaces:
     - name: rhoda
