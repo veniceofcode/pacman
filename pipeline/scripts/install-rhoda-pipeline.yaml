@@ -1,0 +1,43 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: install-rhoda-operator
+spec:
+  tasks:
+    - name: install-rhoda-operator
+      params:
+        - name: url
+          value: 'https://github.com/veniceofcode/pacman.git'
+        - name: submodules
+          value: 'true'
+        - name: depth
+          value: '1'
+        - name: sslVerify
+          value: 'true'
+        - name: deleteExisting
+          value: 'true'
+        - name: verbose
+          value: 'true'
+        - name: gitInitImage
+          value: >-
+            registry.redhat.io/openshift-pipelines/pipelines-git-init-rhel8@sha256:5b36e9d4ddffa4c253c47e444b7d3158bbbd2a3acf3c301389f6c50cbf5e8086
+        - name: userHome
+          value: /tekton/home
+        - name: CLUSTER_NAME
+          value: maverick
+        - name: CATALOG_SOURCE
+          value: openshift-marketplace
+        - name: CHANNEL
+          value: stable
+      taskRef:
+        kind: Task
+        name: install-rhoda-operator
+      workspaces:
+        - name: output
+          workspace: rhoda
+  workspaces:
+    - name: rhoda
+      optional: false
+  params: []
+  resources: []
+  finally: []
