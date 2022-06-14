@@ -1,5 +1,14 @@
 ---
 apiVersion: v1
+kind: Template
+metadata:
+  annotations:
+    description: OpenShift Swagger UI
+    iconClass: icon-load-balancer
+    tags: api,swagger
+  name: openshift-api-swagger
+objects:
+apiVersion: v1
 kind: Namespace
 metadata:
   name: openshift-dbaas-operator
