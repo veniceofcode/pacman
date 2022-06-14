@@ -2,6 +2,19 @@
 echo "Installing RHODA operator"
 CHANNEL=${1:-alpha}
 CATALOG_SOURCE=${2:-openshift-marketplace}
+
+cat <<EOF | oc apply -f -
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: dbaas-operator
+  namespace: openshift-marketplace
+spec:
+  sourceType: grpc
+  image: quay.io/osd-addons/dbaas-operator-index@sha256:feac28aae2c33fa77122c1a0663a258b851db83beb2c33a281d6b50eab8b96e4
+  displayName: DBaaS Operator
+EOF
+
 oc process -f https://raw.githubusercontent.com/veniceofcode/pacman/master/pipeline/scripts/install.yaml | oc apply -f-
 
 echo "Check if RHODA Operator pod is ready"
