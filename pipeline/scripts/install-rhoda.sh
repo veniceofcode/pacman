@@ -12,6 +12,7 @@ kind: Namespace
 metadata:
   name: openshift-dbaas-operator
 ---
+
 apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
