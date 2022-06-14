@@ -21,17 +21,6 @@ metadata:
   name: openshift-dbaas-operator
 EOF
 cat <<EOF | oc apply -f -
-apiVersion: operators.coreos.com/v1alpha1
-kind: CatalogSource
-metadata:
- name: dbaas-operator
- namespace: openshift-marketplace
-spec:
-  sourceType: grpc
-  image: quay.io/osd-addons/dbaas-operator-index@sha256:feac28aae2c33fa77122c1a0663a258b851db83beb2c33a281d6b50eab8b96e4
-  displayName: DBaaS Operator
-EOF
-cat <<EOF | oc apply -f -
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
@@ -55,7 +44,6 @@ spec:
   sourceNamespace: openshift-marketplace
   startingCSV: dbaas-operator.v0.1.5
 EOF
-
 echo "Check if RHODA Operator pod is ready"
 
 for i in {1..150}; do  # timeout after 5 minutes
@@ -73,3 +61,4 @@ for i in {1..150}; do  # timeout after 5 minutes
   echo -n "."
   sleep 10
 done
+
