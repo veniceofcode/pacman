@@ -6,6 +6,7 @@ CHANNEL=${1:-alpha}
 CATALOG_SOURCE=${2:-openshift-marketplace}
 
 cat <<-EOF | oc apply -f -
+---
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -39,6 +40,7 @@ spec:
   installPlanApproval: Automatic
   channel: $CHANNEL
   startingCSV: dbaas-operator.v0.1.5
+---
 EOF
 echo "Check if RHODA Operator pod is ready"
 for i in {1..150}; do  # timeout after 5 minutes
