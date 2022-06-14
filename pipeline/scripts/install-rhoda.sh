@@ -34,7 +34,7 @@ metadata:
   name: dbaas-operator
   namespace: openshift-dbaas-operator
 spec:
-  source: $CATALOG_SOURCE
+  source: dbaas-operator
   sourceNamespace: openshift-marketplace
   name: dbaas-operator
   installPlanApproval: Automatic
