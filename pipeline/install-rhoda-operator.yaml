@@ -1,0 +1,36 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: install-rhoda-operator
+spec:
+  params:
+    - name: CLUSTER_NAME
+      description: Cluster name
+    - name: CATALOG_SOURCE
+      default: openshift-marketplace
+      description: Provide catalog-source name through which user have to subscribe operator
+    - name: CHANNEL
+      default: stable
+      description: Place-holder to provide subscription CHANNEL
+  steps:
+    - image: 'image-registry.openshift-image-registry.svc:5000/openshift/cli:latest' 
+      name: rhoda-install
+      env:
+        - name: KUBEADMIN_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: kubeadmin-password
+              name: cluster-$(params.CLUSTER_NAME)
+        - name: APISERVER
+          valueFrom:
+            secretKeyRef:
+              key: api-url
+              name: cluster-$(params.CLUSTER_NAME)
+      script: |
+        #!/usr/bin/env bash
+        set -e -u -o pipefail
+        echo -e "Logged in as kubeadmin user" 
+        oc login -u kubeadmin -p $KUBEADMIN_PASSWORD $APISERVER --insecure-skip-tls-verify=true
+        $(workspaces.rhoda.path)/pipeline/scripts/install-rhoda.sh $(params.CHANNEL) $(params.CATALOG_SOURCE)
+  workspaces:
+    - name: rhoda
