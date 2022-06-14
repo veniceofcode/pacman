@@ -47,6 +47,7 @@ EOF
 echo "Check if RHODA Operator pod is ready"
 for i in {1..150}; do
   output="$(oc get catalogsource -n openshift-marketplace  dbaas-operator -o jsonpath='{.status.connectionState.lastObservedState} {"\n"}')"
+  echo $output
   if [[ "${output}" -eq "READY" ]]
   then
      echo ""
