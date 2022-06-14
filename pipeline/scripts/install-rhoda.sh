@@ -20,3 +20,4 @@ for i in {1..150}; do  # timeout after 5 minutes
   echo -n "."
   sleep 2
 done
+
