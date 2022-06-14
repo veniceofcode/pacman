@@ -16,5 +16,6 @@ for i in {1..150}; do  # timeout after 5 minutes
     echo "Timeout: pod was not created."
     exit 2
   fi
-  echo -n "."
+  echo -n "Completed installation of Red Hat OpenShift Database Access Operator"
 done
+
