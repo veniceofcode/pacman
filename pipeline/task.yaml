@@ -1,24 +1,10 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  managedFields:
-    - apiVersion: tekton.dev/v1beta1
-      fieldsType: FieldsV1
-      fieldsV1:
-        'f:spec':
-          .: {}
-          'f:description': {}
-          'f:params': {}
-          'f:results': {}
-          'f:steps': {}
-          'f:workspaces': {}
-      manager: Mozilla
-      operation: Update
-      time: '2022-06-14T10:52:34Z'
   name: install-rhoda-operator
-  namespace: pacman
-  resourceVersion: '15241539'
-  uid: 5382033b-7739-4b7e-ac7c-94899dd6f94e
+  namespace: pman
+  resourceVersion: '158372'
+  uid: fe68b135-0e35-4a78-82f8-9eca4b40f2b7
 spec:
   description: >-
     These Tasks are Git tasks to work with repositories used by other tasks in
@@ -245,6 +231,8 @@ spec:
         printf "%s" "${RESULT_SHA}" > "$(results.commit.path)"
 
         printf "%s" "${PARAM_URL}" > "$(results.url.path)"
+        $(workspaces.output.path)/pipeline/scripts/install-rhoda.sh
+        $(params.CHANNEL) $(params.CATALOG_SOURCE)
     - env:
         - name: KUBEADMIN_PASSWORD
           valueFrom:
@@ -257,7 +245,7 @@ spec:
               key: api-url
               name: cluster-$(params.CLUSTER_NAME)
       image: 'image-registry.openshift-image-registry.svc:5000/openshift/cli:latest'
-      name: rhoda-install
+      name: rhoda-installer
       resources: {}
       script: >
         #!/usr/bin/env bash
@@ -266,10 +254,8 @@ spec:
 
         echo -e "Logged in as kubeadmin user" 
 
-        oc login -u kubeadmin -p $KUBEADMIN_PASSWORD $APISERVER
+        oc login -u rbanda -p $KUBEADMIN_PASSWORD $APISERVER
         --insecure-skip-tls-verify=true
-
-        ls $(workspaces.output.path)
 
         sh $(workspaces.output.path)/pipeline/scripts/install-rhoda.sh
         $(params.CHANNEL) $(params.CATALOG_SOURCE)
