@@ -62,4 +62,3 @@ done
 echo "Openshift Database Access Operator is installed and Running!"
   sleep 2
 done
-
