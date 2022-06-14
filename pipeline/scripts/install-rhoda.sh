@@ -40,7 +40,6 @@ spec:
   installPlanApproval: Automatic
   channel: $CHANNEL
   startingCSV: dbaas-operator.v0.1.5
----
 EOF
 
 sleep 2
