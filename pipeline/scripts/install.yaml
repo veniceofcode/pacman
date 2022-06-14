@@ -32,6 +32,6 @@ objects:
     sourceNamespace: openshift-marketplace
     name: dbaas-operator
     installPlanApproval: Automatic
-    channel: $CHANNEL
+    channel: alpha
     startingCSV: dbaas-operator.v0.1.5
 
