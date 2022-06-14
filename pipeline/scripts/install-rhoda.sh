@@ -1,10 +1,8 @@
 #!/usr/bin/env bash
 
 echo "Installing RHODA operator"
-
 CHANNEL=${1:-alpha}
 CATALOG_SOURCE=${2:-openshift-marketplace}
-
 cat <<EOF | oc apply -f -
 ---
 apiVersion: v1
@@ -12,7 +10,6 @@ kind: Namespace
 metadata:
   name: openshift-dbaas-operator
 ---
-
 apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
