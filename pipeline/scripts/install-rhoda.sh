@@ -6,6 +6,11 @@ CHANNEL=${1:-alpha}
 CATALOG_SOURCE=${2:-openshift-marketplace}
 
 cat <<-EOF | oc apply -f -
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: openshift-dbaas-operator
+---
 apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
@@ -15,8 +20,7 @@ spec:
   sourceType: grpc
   image: quay.io/osd-addons/dbaas-operator-index@sha256:feac28aae2c33fa77122c1a0663a258b851db83beb2c33a281d6b50eab8b96e4
   displayName: DBaaS Operator
-EOF
-cat <<-EOF | oc apply -f -
+---
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
@@ -36,6 +40,7 @@ spec:
   installPlanApproval: Automatic
   channel: $CHANNEL
   startingCSV: dbaas-operator.v0.1.5
+---
 EOF
 echo "Check if RHODA Operator pod is ready"
 for i in {1..150}; do  # timeout after 5 minutes
