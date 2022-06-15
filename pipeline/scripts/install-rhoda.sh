@@ -26,6 +26,8 @@ kind: OperatorGroup
 metadata:
   name: dbaas-operator
   namespace: openshift-dbaas-operator
+  annotations:
+    kubectl.kubernetes.io/last-applied-configuration:
 spec:
 EOF
 cat <<EOF | oc apply -f -
